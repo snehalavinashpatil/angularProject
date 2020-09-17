@@ -1,0 +1,83 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="homeController.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-app="myapp" ng-controller="homeController" class="relative">    
+    <h1 style="text-align: center;">Welcome to homepage</h1> 
+    <button id="myBtn">Click here to Open Modal</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        <div class="popupHeader">
+            <span class="title">Alerts</span>
+            <span class="close">&times;</span>
+        </div>
+        <div class="topnav">
+                <a class="active" href="#home">Immunization Alerts</a>
+                <a href="#Lab">Lab Alerts</a>
+                <a href="#DI">DI Alerts</a>
+                <a href="#Procedure">Procedure Alerts</a>
+                <a href="#about">RX Specific Alerts</a>
+                <a href="#about">DX Specific Alerts</a>
+                <a href="#about">Patient Specific Alerts</a>
+        </div>
+        <div class="popupContent">
+        <div class="form-box relative">
+            <div class="box">
+                        <form ng-submit="addNew(personalDetails)">
+                            <div class="form-group">
+                                <span>Name</span>
+                                <input type="text" class="right inputText" placeholder="" ng-model="personalDetails.name" required>   
+                            </div>
+                            <div class="form-group">
+                                <span>Description</span>
+                                <input type="text" class="right inputText" placeholder="" ng-model="personalDetails.description" required>   
+                            </div>
+                            <div class="form-group">
+                                <span>Web Ref.</span>
+                                <input type="text" class="right inputText" placeholder="" ng-model="personalDetails.webReference" required> 
+                            </div>
+                            <div class="right form-group">
+                                <input type="submit" value="Add" class="btn btn-primary">   
+                            </div>
+                        </form>
+            </div>
+            <div class="formFooter">
+                    <input type="button" class="okBtn" ng-click="closeModel()" value="OK">
+                    <input type="button" class="cancelBtn" ng-click="closeModel()" value="CANCEL">
+            </div>
+        </div>
+        <div class=" table-box" ng-hide="!personalDetails.length">
+            <div class="pageTitle">
+                Immunization Alerts
+            </div>
+            <div class="box">
+                <div style="padding-bottom: 10px;"> 
+                    <span class="left" style="margin-right: 20px;margin-top: 5px;">Find:</span>
+                    <input class="inputText" ng-model="search" type="text"/> 
+                    <input type="button" class="right" ng-click="remove()" value="Delete">
+                </div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="firstCell"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Web Reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="personalDetail in personalDetails| filter:search"">
+                            <td  class="firstCell"><input type="checkbox" ng-model="personalDetail.selected"/></td>
+                            <td>{{personalDetail.name}}</td>
+                            <td>{{personalDetail.description}}</td>
+                            <td>{{personalDetail.webReference}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
